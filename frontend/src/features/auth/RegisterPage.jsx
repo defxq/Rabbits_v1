@@ -100,7 +100,7 @@ const RegisterPage = () => {
                 {...matchPwdAttribs}
             />
             </div>
-            <button style={{ marginTop: "10px" }}type="submit" disabled={loading || isLoading}>{loading || isLoading ? "Signning-Up.." : "Sign Up"}</button>
+            <button className="btn" style={{ marginTop: "10px" }}type="submit" disabled={loading || isLoading}>{loading || isLoading ? "Signning-Up.." : "Sign Up"}</button>
         </form>
         <p>Already have an account?&nbsp;
             <Link to="/login" replace state={{ from: location }}>Login</Link>

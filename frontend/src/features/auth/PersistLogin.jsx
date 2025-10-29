@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react"
 import { Outlet, useLocation, useNavigate } from "react-router"
 import { useLazyRefreshQuery, useLazyPingQuery } from "./authApiSlice";
-import { useDispatch } from "react-redux";
-import { setCredentials } from "./authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCurrentToken, setCredentials } from "./authSlice";
 
 
 const PersistLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
+    const token = useSelector(selectCurrentToken);
     const [failed, setFailed] = useState(false);
     const [triggerRefresh] = useLazyRefreshQuery();
     const location = useLocation();
     const [triggerPing] = useLazyPingQuery();
-    // test backend if not found, then down down this
+    // fix refreshing everytime if you already have accesstoken in state
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const from = location.state?.from?.pathname || '/';
@@ -24,6 +25,10 @@ const PersistLogin = () => {
                 const ping = await triggerPing();
                 if (ping.status !== "fulfilled") {
                     setFailed(true);
+                    return;
+                } else if (token) {
+                    return;
+                } else if (isPersist) {
                     return;
                 }
                 const result = await triggerRefresh();

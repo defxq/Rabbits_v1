@@ -4,11 +4,11 @@ const usersApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getAllUsers: builder.query({
             query: () => "/users/all",
-            keepUnusedDataFor: 100,
+            keepUnusedDataFor: 60,
         }),
         getMe: builder.query({
             query: () => "/users/me",
-            keepUnusedDataFor: 100,
+            keepUnusedDataFor: 60,
         }),
     })
 });

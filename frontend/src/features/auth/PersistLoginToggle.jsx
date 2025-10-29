@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const PersistLoginToggle = () => {
-    const [check, setCheck] = useState(true);
+    const [check, setCheck] = useState(JSON.parse(localStorage.getItem('persist')) || true);
 
     const handleCheck = () => {
         setCheck(prev => !prev);
@@ -19,7 +19,7 @@ const PersistLoginToggle = () => {
             checked={check}
             onChange={handleCheck}
         />
-        <label htmlFor="forget">Keep me Signed-In</label>
+        <label className="remember-me" htmlFor="forget">Keep me Signed-In</label>
     </div>
   )
 }

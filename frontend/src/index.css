@@ -1,9 +1,282 @@
+/* Dark hacker theme with green + red accents and a bottom-right red spider */
+:root {
+    --bg-1: #0b0b0d; /* darkest */
+    --bg-2: #141417;
+    --green: #00ff66;
+    /* richer emerald for better contrast (emerald-city theme) */
+    --emerald: #16a34a;
+    /* stronger link color (more visible than muted emerald) */
+    --link: #00b36b;
+    --green-dim: #1aff8f;
+    --red: #ff3b3b;
+    --muted: #9aa7a6;
+}
+
+* { box-sizing: border-box; }
+
+/* remove bullets globally for ul/ol (defensive, high-specificity) */
+ul, ol, nav ul, nav ol, .nav ul, .nav ol { list-style: none !important; margin: 0 !important; padding: 0 !important; }
+li, nav li, .nav li { list-style: none !important; }
+/* remove marker pseudo-element if browser presents one */
+li::marker, nav li::marker, .nav li::marker { content: none !important; display: none !important; }
+ul, ol { list-style-image: none !important; }
+
+html, body {
+    height: 100%;
+}
+
 body {
-    background-color: aliceblue;
-    font-family: sans-serif;
+        margin: 0;
+        /* subtle center highlight so corners stay dark */
+        background:
+            /* slightly stronger center highlight */
+            radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05), rgba(255,255,255,0) 28%),
+            radial-gradient(circle at 10% 10%, rgba(0,255,102,0.02), transparent 8%),
+            linear-gradient(180deg, var(--bg-1), var(--bg-2));
+        color: var(--green);
+        font-family: 'Fira Mono', 'Courier New', Courier, monospace;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
 }
 
-nav {
+h1, h2, h3, h4, h5, h6 {
+    color: var(--green);
+    text-shadow: 0 0 6px rgba(0,255,102,0.06);
+}
+
+a {
+    color: var(--link);
+    text-decoration: none;
+    transition: color .18s ease, text-shadow .18s ease, transform .12s ease, background .12s ease;
+}
+
+/* make links visibly different from body/text and more legible */
+a:link, a:visited { color: var(--link); }
+a:hover {
+    color: #e9fff4; /* light on hover for contrast */
+    background: rgba(0,179,107,0.06);
+    text-shadow: 0 0 12px rgba(0,179,107,0.12);
+    transform: translateY(-1px);
+}
+
+a:active { color: #0a8a4f; }
+
+/* NAVBAR - remove bullets and make it cool */
+nav, .nav {
     display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.24);
+    /* make the nav border more visible */
+    border: 1px solid rgba(0,255,102,0.12);
+    backdrop-filter: blur(6px);
 }
 
+nav ul, .nav ul {
+    list-style: none !important; /* force removal of bullets */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* extra defensive rule in case a list-style marker is still present */
+nav ul li { list-style: none; }
+nav ul li::marker { content: none; }
+
+nav li, .nav li {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px 8px 28px; /* room for left marker */
+    border-radius: 8px;
+    color: var(--muted);
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    transition: all .16s ease;
+    position: relative;
+    cursor: pointer;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.02));
+    border: 1px solid rgba(255,255,255,0.04);
+}
+
+/* small mixed-color marker to the left of each nav item */
+nav li::before, .nav li::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 7px;
+    height: 7px;
+    border-radius: 2px;
+    background: var(--green); /* single color marker per request */
+}
+
+nav li a, .nav li a { color: inherit; text-decoration: none; padding-left: 0; }
+
+nav li:hover, .nav li:hover {
+    color: var(--green);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0,255,102,0.04), 0 0 14px rgba(255,59,59,0.02) inset;
+    border-color: rgba(0,255,102,0.12);
+}
+
+nav li.active, .nav li.active {
+    color: var(--green);
+    background: linear-gradient(90deg, rgba(0,255,102,0.03), rgba(255,59,59,0.02));
+    box-shadow: 0 8px 24px rgba(0,255,102,0.06);
+}
+
+/* panels and code-like blocks */
+.panel, .card {
+    background: rgba(0,0,0,0.46);
+    border: 1px solid rgba(0,255,102,0.04);
+    padding: 16px;
+    border-radius: 8px;
+    color: var(--green);
+}
+
+/* red spider in bottom-right corner - uses created SVG */
+.spider-corner {
+    position: fixed;
+    right: 26px;
+    bottom: 26px;
+    width: 140px;
+    height: auto;
+    pointer-events: none;
+    display: block;
+    /* when spider is an <img> the filter applies to the SVG shape (no rectangular box glow) */
+    filter: drop-shadow(0 14px 34px rgba(255,30,30,0.62)) saturate(150%);
+    opacity: 1;
+    transform-origin: center;
+    /* slow the glow and keep it subtle */
+    animation: float 6s ease-in-out infinite, subtle-rotate 12s linear infinite, glow 8s ease-in-out infinite;
+    z-index: 9999;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes subtle-rotate {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-6px) rotate(3deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+}
+
+@keyframes glow {
+    /* animate the drop-shadow (no box-shadow) so the highlight follows the SVG form */
+    0% { filter: drop-shadow(0 12px 28px rgba(255,30,30,0.46)) saturate(140%); }
+    50% { filter: drop-shadow(0 22px 56px rgba(255,30,30,0.78)) saturate(160%); }
+    100% { filter: drop-shadow(0 12px 28px rgba(255,30,30,0.46)) saturate(140%); }
+}
+
+/* Theme form inputs (username / password) */
+input[type="text"], input[type="password"], input, textarea, select {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(0,255,102,0.06);
+    color: var(--green);
+    padding: 10px 12px;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color .16s ease, box-shadow .18s ease, background .12s;
+    caret-color: var(--green);
+}
+
+/* make placeholders more visible */
+input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.42); }
+
+input:focus, textarea:focus, select:focus {
+    border-color: var(--green);
+    box-shadow: 0 8px 28px rgba(0,255,102,0.06);
+    background: rgba(0,0,0,0.6);
+}
+
+/* faint border and subtle background for form containers */
+form, .form, .form-container {
+    border: 1px solid rgba(255,255,255,0.03);
+    background: rgba(0,0,0,0.32);
+    padding: 12px;
+    border-radius: 8px;
+}
+
+/* stronger contrast for form labels */
+label { color: var(--muted); font-size: 0.95rem; }
+
+/* Remember-me label (user provided a className) - appear as normal text, not emphasized like other form labels */
+.remember-me {
+    color: rgba(9, 255, 17, 0.72);
+    font-weight: 560;
+    font-size: 0.95rem;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+/* Themed buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.04);
+    background: rgba(255,255,255,0.02);
+    color: var(--emerald);
+    cursor: pointer;
+    transition: transform .12s ease, box-shadow .16s ease, background .12s ease;
+}
+
+.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 26px rgba(46,204,113,0.04); }
+
+.btn-primary, .btn-emerald {
+    background: linear-gradient(90deg, rgba(46,204,113,0.14), rgba(8,120,80,0.06));
+    color: #e9ffef;
+    border: 1px solid rgba(46,204,113,0.22);
+}
+
+.btn-primary:hover, .btn-emerald:hover { box-shadow: 0 12px 40px rgba(46,204,113,0.08); }
+
+/* small utility for red accent buttons */
+.btn-danger {
+    background: linear-gradient(90deg, rgba(255,59,59,0.12), rgba(0,0,0,0.02));
+    color: var(--red);
+    border: 1px solid rgba(255,59,59,0.12);
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.btn-danger:hover { box-shadow: 0 6px 24px rgba(255,59,59,0.08); color: #fff; background: linear-gradient(90deg, rgba(255,59,59,0.22), rgba(0,0,0,0.04)); }
+
+/* keep a small legibility fallback */
+.muted { color: var(--muted); }
+
+/* give main root some breathing room from the left edge */
+#root {
+    padding: 28px;
+}
+
+/* Links page specific: more spacing and bigger click targets for .linksList */
+.linksList ul { padding-left: 0; margin: 0; }
+.linksList ul li { margin-bottom: 12px; }
+.linksList ul li:last-child { margin-bottom: 0; }
+.linksList ul li a {
+    display: block; /* make entire row clickable */
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: var(--link);
+    transition: background .14s ease, color .12s ease, transform .12s ease;
+}
+.linksList ul li a:hover {
+    background: rgba(0,179,107,0.06);
+    color: #e9fff4;
+    transform: translateX(4px);
+}
+
+/* helper: if you prefer not to edit HTML, add this <div class="spider-corner" aria-hidden="true"></div> into your root HTML (index.html or Layout) to show spider */

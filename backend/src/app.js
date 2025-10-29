@@ -22,14 +22,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/', root);
+app.get("/ping", (req, res) => {
+    res.status(200).json({ message: "Pong!"});
+});
 
 app.use('/auth', authRoute);
 app.use(verifyJWT);
 app.use('/users', usersRoute);
 
-app.get("/ping", (req, res) => {
-    res.status(200).json({ message: "Pong!"});
-});
 
 app.all(/.*/, (req, res) => {
     res.status(404).json({ message: "Page not found!"});

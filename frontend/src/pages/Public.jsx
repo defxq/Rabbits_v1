@@ -7,7 +7,7 @@ const Public = () => {
       <p>
       Currently in development...
       </p>
-      <Link to="links">Links Page</Link>
+      <Link to="/links">Links Page</Link>
     </div>
   )
 }

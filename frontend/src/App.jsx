@@ -15,6 +15,7 @@ import General from "./pages/General";
 import AboutMe from "./pages/AboutMe";
 import NavBar from "./components/NavBar";
 import PersistLogin from "./features/auth/PersistLogin";
+import Homepage from "./pages/Homepage";
 
 const ROLES_LIST = {
     User: 'USER',
@@ -24,13 +25,14 @@ const ROLES_LIST = {
 
 const App = () => {
   return (
-    <>
+    <main>
     <NavBar />
     <Routes>
         <Route path="/*" element={<Layout />}>
           {/* public routes */}
-            <Route index element={<Public />}/>
+            <Route index element={<Homepage />}/>
             <Route path="login" element={<LoginPage />}/>
+            <Route path="public" element={<Public />}/>
             <Route path="signup" element={<RegisterPage />}/>
             <Route path="links" element={<LinksPage />}/>
             <Route path="unauthorized" element={<Unauthorized />}/>
@@ -55,7 +57,7 @@ const App = () => {
             <Route path="*" element={<Missing />}/>
         </Route>
     </Routes>
-    </>
+    </main>
   )
 }
 export default App;

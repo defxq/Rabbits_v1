@@ -68,8 +68,8 @@ const LoginPage = () => {
     <div>
         <h2>Log In</h2>
         <form onSubmit={handleLogin}>
-            <div>
             <label htmlFor="username">Username:</label>
+            <div>
             <input
                 type="text"
                 placeholder="username"
@@ -80,8 +80,8 @@ const LoginPage = () => {
                 {...usernameAttribs}
                 />
             </div>
-            <div>
             <label htmlFor="password">Password:</label>
+            <div>
             <input
                 type="password"
                 placeholder="password"
@@ -90,7 +90,7 @@ const LoginPage = () => {
                 {...passwordAttribs}
             />
             </div>
-            <button style={{ marginTop: "10px" }} type="submit" disabled={loading || isLoading}>{loading || isLoading ? "Logging-in.." : "Log in"}</button>
+            <button className="btn" style={{ marginTop: "10px" }} type="submit" disabled={loading || isLoading}>{loading || isLoading ? "Logging-in.." : "Log in"}</button>
         </form>
         <PersistLoginToggle />
         <p>Don't have an account yet?&nbsp;

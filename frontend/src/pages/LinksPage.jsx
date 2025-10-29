@@ -6,12 +6,17 @@ import LogoutButton from "../features/auth/LogoutButton";
 const LinksPage = () => {
         const [user, isAuthorized] = useAuth();
   return (
-    <div>
+    <div className="linksList">
         <h2>Links List</h2>
         <ul>
             <li>
                 <Link to="/">
                     Main Page
+                </Link>
+            </li>
+            <li>
+                <Link to="/public">
+                    Public
                 </Link>
             </li>
             <li>
