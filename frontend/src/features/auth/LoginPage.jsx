@@ -94,7 +94,7 @@ const LoginPage = () => {
         </form>
         <PersistLoginToggle />
         <p>Don't have an account yet?&nbsp;
-            <Link to="/signup" replace state={{ from: location }}>Sign Up</Link>
+            <Link to="/signup" replace state={{ from: location }}>Sign-Up</Link>
         </p>
     </div>
   )

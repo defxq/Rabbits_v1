@@ -155,7 +155,7 @@ nav li.active, .nav li.active {
     transform-origin: center;
     /* slow the glow and keep it subtle */
     animation: float 6s ease-in-out infinite, subtle-rotate 12s linear infinite, glow 8s ease-in-out infinite;
-    z-index: 9999;
+    z-index: -1; /* keep behind main content but above page background */
 }
 
 @keyframes float {
@@ -260,7 +260,56 @@ label { color: var(--muted); font-size: 0.95rem; }
 /* give main root some breathing room from the left edge */
 #root {
     padding: 28px;
+    position: relative;
+    z-index: 2; /* ensure app content sits above the spider */
 }
+
+/* ensure main/site regions appear above spider (spider looks like background) */
+main, header, nav, footer, .app, .App {
+    position: relative;
+    z-index: 2;
+}
+
+/* make body background fixed and cover to avoid white gaps when scrolling */
+html, body {
+    height: 100%;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: var(--bg-1);
+    overflow-x: hidden;
+}
+
+/* If some pages use a scrolling main area, keep the main scrollable but keep body background visible */
+main {
+    background: transparent;
+}
+
+/* responsive: make spider smaller on small screens */
+@media (max-width: 600px) {
+    .spider-corner {
+        width: 72px;
+        right: 12px;
+        bottom: 12px;
+        filter: drop-shadow(0 8px 20px rgba(255,30,30,0.56)) saturate(130%);
+    }
+}
+
+/* red-themed button variant (named per request) */
+.btn-red {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,59,59,0.18);
+    background: linear-gradient(90deg, rgba(255,59,59,0.18), rgba(120,20,20,0.06));
+    color: #fff;
+    cursor: pointer;
+    transition: transform .12s ease, box-shadow .16s ease, background .12s ease;
+}
+.btn-red:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,59,59,0.12); }
 
 /* Links page specific: more spacing and bigger click targets for .linksList */
 .linksList ul { padding-left: 0; margin: 0; }

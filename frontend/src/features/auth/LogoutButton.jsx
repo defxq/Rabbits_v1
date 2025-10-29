@@ -30,7 +30,7 @@ const LogoutButton = () => {
     };
 
   return (
-    <button type="button" onClick={handleLogout}>Logout</button>
+    <button className="btn-red" type="button" onClick={handleLogout}>Logout</button>
   )
 }
 export default LogoutButton
