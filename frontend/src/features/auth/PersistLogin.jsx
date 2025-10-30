@@ -28,7 +28,7 @@ const PersistLogin = () => {
                     return;
                 } else if (token) {
                     return;
-                } else if (isPersist) {
+                } else if (!isPersist) {
                     return;
                 }
                 const result = await triggerRefresh();
